@@ -5,7 +5,11 @@ public class FAOPS {
         // criação do objecto utilizando o constructor com argumento para
         // ler do standard input (teclado)
         FAOPS parser = new FAOPS(System.in);
-        parser.Aritm();
+        try {
+            parser.start();
+        } catch (Throwable e) {
+    		System.out.println("Rejected.");
+    	}
     }
 }
 PARSER_END(FAOPS)
@@ -19,28 +23,42 @@ SKIP :
 // definição dos tokens (símbolos terminais)
 TOKEN :
 {
-    < INTEGER : (["0" - "9"])+ >
+    < INTEGER : (["0"-"9"])+ >
     | < LF : "\n" >
     | < FA : "FA" >
-    | < FANAME : (["a" - "z"] | ["A" - "Z"])+ >
-    | < FILENAME : ((["a" - "z"] | ["A" - "Z"])+ ".dot") >
-    | < OPERATION : "x(" | ".(" | "not(" | "rev(" | "int(" | "+(" >
-    | < ENDOPERATION : ")" >
+    | < FANAME : (["A"-"Z"])+ >
+    | < FILENAME : ("\"" (["a"-"z"] | ["A"-"Z"])+ ".dot\"") >
+    | < OP1 : "x" | "." | "int" | "+" >
+    | < OP2 : "not(" | "rev(" >
     | < NEW : "new(" >
+    | < DUMP : ".dump(" >
+    | < ASSIGN : "=" >
+    | < BEGINOPERATION : "(" >
+    | < ENDOPERATION : ")" >
 }
 
-// definição da produção
-/*void Aritm() : {}
+void start() : {} //no bloco definido pelas primeiras chavetas declaram-se variáveis para a função
 {
-    <INTEGER> ( ("+" | "-") <INTEGER> )? <LF> // “(...)?” é equivalente a “[...]”
+    ((<FA> <FANAME> <ASSIGN> stmt()) |
+    dump()) {
+        System.out.println("Accepted!");
+    }
 }
-*/
-void Aritm() : {Token t1, t2, op;} //no bloco definido pelas primeiras chavetas declaram-se variáveis para a função
+
+void stmt() : {}
 {
-    /*t1=<FILENAME> {
-    System.out.println("Filename = "+ t1.image); //image tem o valor String do token
-}*/
-    /*t1=<FA>
-    t2=<FANAME>*/
-    (<LF>)
+    (<NEW> <FILENAME> <ENDOPERATION>) |
+    (expr() (<OP1> expr())?)
+}
+
+void expr() : {}
+{
+    (<OP2> stmt() <ENDOPERATION>) |
+    (<BEGINOPERATION> stmt() <ENDOPERATION>) |
+    (<FANAME>)
+}
+
+void dump() : {}
+{
+    <FANAME> <DUMP> <FILENAME> <ENDOPERATION>
 }
