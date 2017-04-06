@@ -1,4 +1,4 @@
-FA A = new(“A.dot”);
-FA B = new(“B.dot”);
+FA A = new("A.dot")
+FA B = new("B.dot")
 FA C = not(A int B)
-C.dump(“dot”);
+C.dump("dot.dot")

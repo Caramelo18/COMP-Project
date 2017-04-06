@@ -1,12 +1,23 @@
 PARSER_BEGIN(FAOPS)
+
+import java.io.FileReader;
+
 // código Java que invoca o parser
 public class FAOPS {
     public static void main(String args[]) throws ParseException {
         // criação do objecto utilizando o constructor com argumento para
-        // ler do standard input (teclado)
-        FAOPS parser = new FAOPS(System.in);
+        FileReader fr = null;;
         try {
-            parser.start();
+            fr = new FileReader("test.fa");
+
+        } catch (Throwable e) {
+            System.out.println("File not found");
+        }
+
+        FAOPS parser = new FAOPS(fr);
+        try {
+            while(true)
+                parser.start();
         } catch (Throwable e) {
     		System.out.println("Rejected.");
     	}
@@ -24,7 +35,7 @@ SKIP :
 TOKEN :
 {
     < INTEGER : (["0"-"9"])+ >
-    | < LF : "\n" >
+    | < LF : "\n" | "\r" | "\r\n" >
     | < FA : "FA" >
     | < FANAME : (["A"-"Z"])+ >
     | < FILENAME : ("\"" (["a"-"z"] | ["A"-"Z"])+ ".dot\"") >
@@ -39,10 +50,16 @@ TOKEN :
 
 void start() : {} //no bloco definido pelas primeiras chavetas declaram-se variáveis para a função
 {
+
     ((<FA> <FANAME> <ASSIGN> stmt()) |
-    dump()) {
-        System.out.println("Accepted!");
+    dump()) (<LF>) {
+        System.out.println("Line Accepted!");
     }
+    | <EOF> {
+        System.out.println("File Accepted");
+        System.exit(0);
+    }
+
 }
 
 void stmt() : {}
