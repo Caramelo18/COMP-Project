@@ -6,8 +6,6 @@ import org.graphstream.stream.file.FileSourceDOT;
 
 import java.io.IOException;
 
-import faops.Reverse;
-
 public class ParseDot {
     DefaultGraph graph;
 
@@ -25,10 +23,11 @@ public class ParseDot {
         	fs.removeSink(graph);
         }
 
-        Reverse r = new Reverse(graph);
-
         System.out.println("FA " + path + " has " + graph.getEdgeCount() + " edges.");
         System.out.println("FA " + path + " has " + graph.getNodeCount() + " nodes.");
     }
 
+    public Graph getGraph() {
+        return graph;
+    }
 }

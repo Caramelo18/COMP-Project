@@ -2,7 +2,7 @@ PARSER_BEGIN(FAOPS)
 
 import java.io.FileReader;
 
-import faops.ParseDot;
+import faops.*;
 
 // código Java que invoca o parser
 public class FAOPS {
@@ -71,6 +71,8 @@ void stmt() : {Token path;}
 
     ParseDot parser = new ParseDot();
     parser.parseFile(path.image);
+    DumpDot dump = new DumpDot(parser.getGraph());
+    dump.dumpFile("exit" + path.image);
     }|
     (expr() (<OP1> expr())?)
 }
