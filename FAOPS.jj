@@ -1,0 +1,46 @@
+PARSER_BEGIN(FAOPS)
+// código Java que invoca o parser
+public class FAOPS {
+    public static void main(String args[]) throws ParseException {
+        // criação do objecto utilizando o constructor com argumento para
+        // ler do standard input (teclado)
+        FAOPS parser = new FAOPS(System.in);
+        parser.Aritm();
+    }
+}
+PARSER_END(FAOPS)
+
+// símbolos que não devem ser considerados na análise
+SKIP :
+{
+    " " | "\t" | "\r"
+}
+
+// definição dos tokens (símbolos terminais)
+TOKEN :
+{
+    < INTEGER : (["0" - "9"])+ >
+    | < LF : "\n" >
+    | < FA : "FA" >
+    | < FANAME : (["a" - "z"] | ["A" - "Z"])+ >
+    | < FILENAME : ((["a" - "z"] | ["A" - "Z"])+ ".dot") >
+    | < OPERATION : "x(" | ".(" | "not(" | "rev(" | "int(" | "+(" >
+    | < ENDOPERATION : ")" >
+    | < NEW : "new(" >
+}
+
+// definição da produção
+/*void Aritm() : {}
+{
+    <INTEGER> ( ("+" | "-") <INTEGER> )? <LF> // “(...)?” é equivalente a “[...]”
+}
+*/
+void Aritm() : {Token t1, t2, op;} //no bloco definido pelas primeiras chavetas declaram-se variáveis para a função
+{
+    /*t1=<FILENAME> {
+    System.out.println("Filename = "+ t1.image); //image tem o valor String do token
+}*/
+    /*t1=<FA>
+    t2=<FANAME>*/
+    (<LF>)
+}
