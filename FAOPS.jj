@@ -6,7 +6,7 @@ import java.io.FileReader;
 public class FAOPS {
     public static void main(String args[]) throws ParseException {
         // criação do objecto utilizando o constructor com argumento para
-        FileReader fr = null;;
+        FileReader fr = null;
         try {
             fr = new FileReader("test.fa");
 
@@ -46,13 +46,14 @@ TOKEN :
     | < ASSIGN : "=" >
     | < BEGINOPERATION : "(" >
     | < ENDOPERATION : ")" >
+    | < ENDLINE : ";" >
 }
 
 void start() : {} //no bloco definido pelas primeiras chavetas declaram-se variáveis para a função
 {
 
     ((<FA> <FANAME> <ASSIGN> stmt()) |
-    dump()) (<LF>) {
+    dump()) ((<ENDLINE>)? <LF>) {
         System.out.println("Line Accepted!");
     }
     | <EOF> {
