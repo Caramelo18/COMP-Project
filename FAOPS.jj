@@ -2,13 +2,15 @@ PARSER_BEGIN(FAOPS)
 
 import java.io.FileReader;
 
+import faops.ParseDot;
+
 // código Java que invoca o parser
 public class FAOPS {
     public static void main(String args[]) throws ParseException {
         // criação do objecto utilizando o constructor com argumento para
         FileReader fr = null;
         try {
-            fr = new FileReader("test.fa");
+            fr = new FileReader("test.faops");
 
         } catch (Throwable e) {
             System.out.println("File not found");
@@ -34,11 +36,10 @@ SKIP :
 // definição dos tokens (símbolos terminais)
 TOKEN :
 {
-    < INTEGER : (["0"-"9"])+ >
-    | < LF : "\n" | "\r" | "\r\n" >
-    | < FA : "FA" >
+    < FA : "FA" >
     | < FANAME : (["A"-"Z"])+ >
-    | < FILENAME : ("\"" (["a"-"z"] | ["A"-"Z"])+ ".dot\"") >
+    | < QUOTES : ("\"") >
+    | < FILENAME : ((["a"-"z"]|["A"-"Z"]|"-"|"_"|["0"-"9"]|".")+ ".dot") >
     | < OP1 : "x" | "." | "int" | "+" >
     | < OP2 : "not(" | "rev(" >
     | < NEW : "new(" >
@@ -47,6 +48,7 @@ TOKEN :
     | < BEGINOPERATION : "(" >
     | < ENDOPERATION : ")" >
     | < ENDLINE : ";" >
+    | < LF : "\n" | "\r" | "\r\n" >
 }
 
 void start() : {} //no bloco definido pelas primeiras chavetas declaram-se variáveis para a função
@@ -63,9 +65,13 @@ void start() : {} //no bloco definido pelas primeiras chavetas declaram-se vari�
 
 }
 
-void stmt() : {}
+void stmt() : {Token path;}
 {
-    (<NEW> <FILENAME> <ENDOPERATION>) |
+    (<NEW> <QUOTES> (path = <FILENAME>) <QUOTES> <ENDOPERATION>) {
+
+    ParseDot parser = new ParseDot();
+    parser.parseFile(path.image);
+    }|
     (expr() (<OP1> expr())?)
 }
 
@@ -78,5 +84,5 @@ void expr() : {}
 
 void dump() : {}
 {
-    <FANAME> <DUMP> <FILENAME> <ENDOPERATION>
+    <FANAME> <DUMP> <QUOTES> <FILENAME> <QUOTES> <ENDOPERATION>
 }
