@@ -1,12 +1,12 @@
 package faops;
 
+import java.util.Collection;
 import java.util.Iterator;
-import org.graphstream.graph.Graph;
-import org.graphstream.graph.implementations.DefaultGraph;
-import org.graphstream.graph.implementations.AbstractEdge;
 import org.graphstream.graph.*;
+import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.*;
-
+import org.graphstream.graph.implementations.AbstractEdge;
+import org.graphstream.graph.implementations.DefaultGraph;
 
 public class Reverse {
 
@@ -16,8 +16,18 @@ public class Reverse {
         this.reversedGraph = new MultiGraph(graph.getId() + "r");
 
         Iterator<AbstractNode> nodeIterator = graph.getNodeIterator();
-        while(nodeIterator.hasNext())
-            this.reversedGraph.addNode(nodeIterator.next().getId());
+        while(nodeIterator.hasNext()){
+            AbstractNode node = nodeIterator.next();
+            if(node.hasAttribute("shape")){
+                String type = node.getAttribute("shape").toString();
+                String newType = getNewNodeType(type);
+                node.setAttribute("shape", newType);
+                System.out.println("Previous type: " +  type);
+                System.out.println("New type: " +  node.getAttribute("shape").toString( ));
+            }
+
+            this.reversedGraph.addNode(node.getId());
+        }
 
         Iterator<AbstractEdge> iterator = graph.getEdgeIterator();
         int i = 5656;
@@ -40,6 +50,24 @@ public class Reverse {
         DumpDot dump = new DumpDot(this.reversedGraph);
         dump.dumpFile("exitTest.dot");
     }
+
+
+    private String getNewNodeType(String currentType){
+        String ret = null;
+        switch(currentType){
+            case "doublecircle":
+                ret = "circle";
+                break;
+            case "circle":
+                ret = "doublecircle";
+                break;
+            default:
+                ret = "teste"; //TODO: CHANGE
+                break;
+        }
+        return ret;
+    }
+
 
     public MultiGraph getReversed() {
         return reversedGraph;

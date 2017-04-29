@@ -1,15 +1,16 @@
 package faops;
 
 import org.graphstream.graph.Graph;
+import org.graphstream.graph.implementations.*;
 import org.graphstream.graph.implementations.DefaultGraph;
 import org.graphstream.stream.file.FileSinkDOT;
 
 import java.io.IOException;
 
 public class DumpDot {
-    Graph graph;
+    MultiGraph graph;
 
-    public DumpDot(Graph graph) {
+    public DumpDot(MultiGraph graph) {
         this.graph = graph;
     }
 

@@ -21,6 +21,7 @@ public class FAOPS {
             while(true)
                 parser.start();
         } catch (Throwable e) {
+            e.printStackTrace();
     		System.out.println("Rejected.");
     	}
     }
@@ -73,6 +74,8 @@ void stmt() : {Token path;}
     parser.parseFile(path.image);
     DumpDot dump = new DumpDot(parser.getGraph());
     dump.dumpFile("exit" + path.image);
+
+    Reverse rev = new Reverse(parser.getGraph());
     }|
     (expr() (<OP1> expr())?)
 }

@@ -7,7 +7,7 @@ import org.graphstream.stream.file.FileSourceDOT;
 import java.io.IOException;
 
 public class ParseDot {
-    Graph graph;
+    MultiGraph graph;
 
     public void parseFile(String path) {
         graph = new MultiGraph(path) ;
@@ -27,7 +27,7 @@ public class ParseDot {
         System.out.println("FA " + path + " has " + graph.getNodeCount() + " nodes.");
     }
 
-    public Graph getGraph() {
+    public MultiGraph getGraph() {
         return graph;
     }
 }
