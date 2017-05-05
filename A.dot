@@ -1,14 +1,9 @@
 digraph finite_state_machine {
-
-    node [shape = doublecircle]; S;
-    node [shape = point ]; qi;
+    node [shape = doublecircle]; af;
+    node [shape = point ]; ai;
 
     node [shape = circle];
-    qi -> S;
-    S  -> q1 [ label = "a" ];
-    S  -> S  [ label = "a" ];
-    q1 -> S  [ label = "a" ];
-    q1 -> q2 [ label = "b" ];
-    q2 -> q1 [ label = "b" ];
-    q2 -> q2 [ label = "b" ];
+    ai -> a1;
+    a1 -> af [ label = "a" ];
+    af -> af  [ label = "b" ];
 }

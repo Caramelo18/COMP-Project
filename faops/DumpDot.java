@@ -12,6 +12,7 @@ public class DumpDot {
 
     public DumpDot(MultiGraph graph) {
         this.graph = graph;
+        this.graph.addAttribute("rankdir", "LR");
     }
 
     public void dumpFile(String path) {

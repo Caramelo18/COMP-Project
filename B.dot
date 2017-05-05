@@ -1,8 +1,9 @@
 digraph finite_state_machine {
-    qi -> S;
-    S  -> q1 [ label = "a" ];
-    S  -> S  [ label = "a" ];
-    q1 -> S  [ label = "a" ];
-    q1 -> q2 [ label = "b" ];
-    q2 -> q1 [ label = "b" ];
+    node [shape = doublecircle]; bf;
+    node [shape = point ]; bi;
+
+    node [shape = circle];
+    bi -> b1;
+    b1 -> bf [ label = "b" ];
+    bf -> bf  [ label = "a" ];
 }
