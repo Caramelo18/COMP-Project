@@ -2,6 +2,7 @@ package faops;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.ArrayList;
 import org.graphstream.graph.*;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.*;
@@ -11,10 +12,25 @@ import org.graphstream.graph.implementations.DefaultGraph;
 public class Reverse {
 
     private MultiGraph reversedGraph;
+    private MultiGraph graph;
 
+    private String startPoint;
+    private ArrayList<String> acceptState;
+
+    //souce: https://cs.stackexchange.com/questions/39622/designing-a-dfa-and-the-reverse-of-it
     public Reverse(MultiGraph graph) {
+        this.graph = graph;
         this.reversedGraph = new MultiGraph(graph.getId() + "r");
+        acceptState = new ArrayList<String>();
 
+        nodes();
+        edges();
+
+        DumpDot dump = new DumpDot(reversedGraph);
+        dump.dumpFile("exitTest.dot");
+    }
+
+    private void nodes(){
         Iterator<AbstractNode> nodeIterator = graph.getNodeIterator();
         while(nodeIterator.hasNext()){
             AbstractNode node = nodeIterator.next();
@@ -25,12 +41,20 @@ public class Reverse {
                 String type = node.getAttribute("shape").toString();
                 String newType = getNewNodeType(type);
                 reversedGraph.getNode(node.getId()).setAttribute("shape", newType);
+
+                if(type.equals("point"))
+                    startPoint = node.getId();
+                else if(type.equals("doublecircle")){
+                    acceptState.add(node.getId());
+                }
                 //node.setAttribute("shape", newType);
             //    System.out.println("Previous type: " +  type);
             //    System.out.println("New type: " +  node.getAttribute("shape").toString( ));
             }
         }
+    }
 
+    private void edges(){
         Iterator<AbstractEdge> iterator = graph.getEdgeIterator();
         int i = 5656;
         while(iterator.hasNext()){
@@ -38,24 +62,26 @@ public class Reverse {
         //    System.out.println("From " + e.getNode0() + " to " + e.getNode1());
             String source = e.getNode0().getId();
             String dest = e.getNode1().getId();
+
+            if(source.equals(startPoint)){
+                for(int j = 0; j < acceptState.size(); j++){
+                    reversedGraph.addEdge(String.valueOf(i), source, acceptState.get(j), true);
+                    i++;
+                }
+                continue;
+            }
             reversedGraph.addEdge(String.valueOf(i), dest, source, true);
 
             if(e.hasAttribute("label"))
                 reversedGraph.getEdge(String.valueOf(i)).addAttribute("label", e.getAttribute("label").toString());
             i++;
         }
-
-
-    /*    Iterator<AbstractEdge> iterator2 = reversedGraph.getEdgeIterator();
-        while(iterator2.hasNext()){
-            AbstractEdge e = iterator2.next();
-            System.out.println("New From " + e.getNode0() + " to " + e.getNode1());
-        }*/
-
-        DumpDot dump = new DumpDot(reversedGraph);
-        dump.dumpFile("exitTest.dot");
+        /*    Iterator<AbstractEdge> iterator2 = reversedGraph.getEdgeIterator();
+            while(iterator2.hasNext()){
+                AbstractEdge e = iterator2.next();
+                System.out.println("New From " + e.getNode0() + " to " + e.getNode1());
+            }*/
     }
-
 
     private String getNewNodeType(String currentType){
         String ret = null;

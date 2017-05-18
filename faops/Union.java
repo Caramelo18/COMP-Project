@@ -137,12 +137,5 @@ public class Union {
         return "circle";
     }
 
-/*    private String getEdgeDestination(Iterator iterator, String source, String input){
-        while(iterator.hasNext()){
-            AbstractEdge edge = iterator.next();
-        }
-
-    }*/
-
 
 }
