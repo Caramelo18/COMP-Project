@@ -74,7 +74,7 @@ public class Concatenate {
                 if(shape.equals("point")){
                     firstNodeB = node.getId();
                     concatenatedGraph.getNode(node.getId()).addAttribute("shape", "circle");
-                    //concatenatedGraph.removeNode(node.getId());
+                    concatenatedGraph.removeNode(node.getId());
                     continue;
                 }
 
@@ -93,6 +93,7 @@ public class Concatenate {
 
             String source = e.getNode0().getId();
             String dest = e.getNode1().getId();
+
             concatenatedGraph.addEdge(String.valueOf(i), source, dest, true);
 
             if(e.hasAttribute("label"))
@@ -106,13 +107,17 @@ public class Concatenate {
 
             String source = e.getNode0().getId();
             String dest = e.getNode1().getId();
+            if(source == firstNodeB){
+                concatenatedGraph.addEdge(String.valueOf(i++), lastNodeA, dest, true);
+                continue;
+            }
             concatenatedGraph.addEdge(String.valueOf(i), source, dest, true);
 
             if(e.hasAttribute("label"))
                 concatenatedGraph.getEdge(String.valueOf(i)).addAttribute("label", e.getAttribute("label").toString());
             i++;
         }
-        concatenatedGraph.addEdge(String.valueOf(i), lastNodeA, firstNodeB, true);
+    //    concatenatedGraph.addEdge(String.valueOf(i), lastNodeA, firstNodeB, true);
     }
 
 
