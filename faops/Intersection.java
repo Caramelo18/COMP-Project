@@ -30,7 +30,7 @@ public class Intersection {
       /*createNodes();
       createEdges();*/
 
-      newGraph = union(complement(this.graphA),complement(this.graphB))
+      newGraph = complement(union(complement(this.graphA),complement(this.graphB)));
 
       DumpDot dump = new DumpDot(newGraph);
       dump.dumpFile("exitTest.dot");
