@@ -52,7 +52,6 @@ private void createNodes(){
                         newGraph.addNode(tempID);
                         newGraph.getNode(tempID).setAttribute("shape", "circle");
                 }
-                id++;
         }
 }
 
@@ -72,7 +71,8 @@ private void createEdges(){
                 String tempDest = tempEdge.getNode1().getId();
 
                 newGraph.addEdge(tempID,tempSource,tempDest,true);
-
+                /*newGraph.addEdge(id,tempSource,tempDest,true);
+                id++*/;
         }
 }
 
