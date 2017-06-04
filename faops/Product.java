@@ -26,9 +26,8 @@ public class Product {
   }
 
 // TODO - FALTA TERMINAR
-  private void intersection(){
+  private void product(){
 
-      newGraph = complement(union(complement(this.graphA),complement(this.graphB)));
 
       DumpDot dump = new DumpDot(newGraph);
       dump.dumpFile("exitTest.dot");

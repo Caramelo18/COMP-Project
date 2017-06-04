@@ -76,8 +76,6 @@ private void createEdges(){
         }
 }
 
-}
-
 //aux functions
 private boolean isPoint(AbstractNode node){
         if(node.hasAttribute("shape")) {
