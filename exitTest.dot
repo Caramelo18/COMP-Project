@@ -1,0 +1,17 @@
+digraph {
+	graph [ "rankdir"="LR" ];
+	"afbf1" ["shape"="doublecircle"];
+	"afbf2" ["shape"="doublecircle"];
+	"afb1" ["shape"="circle"];
+	"afb2" ["shape"="circle"];
+	"a1bf1" ["shape"="circle"];
+	"a1bf2" ["shape"="circle"];
+	"a1b1" ["shape"="circle"];
+	"a1b2" ["shape"="circle"];
+	"a1b1" -> "afb2" ;
+	"a1b2" -> "afbf2" ;
+	"a1bf1" -> "afbf1" ;
+	"afb1" -> "afbf1" ;
+	"afb2" -> "afbf1" ;
+	"afbf1" -> "afb1" ;
+}

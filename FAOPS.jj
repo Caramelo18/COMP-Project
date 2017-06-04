@@ -75,11 +75,16 @@ void stmt() : {Token path;}
     DumpDot dump = new DumpDot(parser.getGraph());
     dump.dumpFile("exit" + path.image);
 
-    Reverse rev = new Reverse(parser.getGraph());
+    //Reverse rev = new Reverse(parser.getGraph());
+    //Complement comp = new Complement(parser.getGraph());
+    //Complement comp2 = new Complement(comp.getGraph());
     ParseDot parser1 = new ParseDot();
     parser1.parseFile("B.dot");
+    //Complement comp = new Complement(parser1.getGraph());
+    //Complement comp2 = new Complement(comp.getGraph());
+    //Reverse rev = new Reverse(parser1.getGraph());
     //Concatenate con = new Concatenate(parser.getGraph(), parser1.getGraph());
-    //Union un = new Union(parser.getGraph(), parser1.getGraph());
+    Union un = new Union(parser.getGraph(), parser1.getGraph());
     }|
     (expr() (<OP1> expr())?)
 }

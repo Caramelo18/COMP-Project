@@ -1,0 +1,9 @@
+digraph {
+	graph [ "rankdir"="LR" ];
+	"ai" ["shape"="point"];
+	"af" ["shape"="doublecircle"];
+	"a1" ["shape"="circle"];
+	"ai" -> "a1" ;
+	"a1" -> "af" ["label"="a"];
+	"af" -> "af" ["label"="b"];
+}

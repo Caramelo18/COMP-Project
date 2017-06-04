@@ -1,9 +1,15 @@
 digraph finite_state_machine {
-    node [shape = doublecircle]; bf;
+    node [shape = doublecircle]; bf1;
+    node [shape = doublecircle]; bf2;
     node [shape = point ]; bi;
 
     node [shape = circle];
     bi -> b1;
-    b1 -> bf [ label = "b" ];
-    bf -> bf  [ label = "a" ];
+    b1 -> b2 [ label = "a" ];
+    b1 -> bf1 [ label = "b" ];
+    b2 -> bf2 [ label = "a" ];
+    b2 -> bf1 [ label = "b" ];
+    bf1 -> bf1 [ label = "a" ];
+    bf1 -> b1 [ label = "b" ];
+    bf2 -> bf2 [ label = "a,b" ];
 }
