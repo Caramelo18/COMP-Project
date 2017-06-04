@@ -1,9 +1,9 @@
 digraph finite_state_machine {
-    node [shape = point ]; ai;
-    node [shape = doublecircle]; af;
+    node [shape = point ]; Ci;
+    node [shape = doublecircle]; Cf;
 
     node [shape = circle];
-    ai -> a1;
-    a1 -> af [ label = "a" ];
-    af -> af  [ label = "b" ];
+    Ci -> C1;
+    C1 -> Cf [ label = "a" ];
+    Cf -> Cf  [ label = "b" ];
 }
