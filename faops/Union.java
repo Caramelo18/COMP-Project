@@ -89,9 +89,9 @@ public class Union {
                 AbstractEdge bEdge = bIterator.next();
 
                 if(!bEdge.hasAttribute("label"))
-                    continue;
+                  String inputB = bEdge.getAttribute("label").toString();
 
-                String inputB = bEdge.getAttribute("label").toString();
+
                 String sourceB = bEdge.getNode0().getId();
                 String destB = bEdge.getNode1().getId();
 
