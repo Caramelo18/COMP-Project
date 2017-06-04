@@ -29,7 +29,7 @@ public class Intersection {
       /*createNodes();
       createEdges();*/
 
-      newGraph = complement(union(complement(this.graphA).getGraph(),complement(this.graphB).getGraph()).getGraph()).getGraph();
+      newGraph = Complement(Union(Complement(this.graphA).getGraph(),Complement(this.graphB).getGraph()).getGraph()).getGraph();
 
       DumpDot dump = new DumpDot(newGraph);
       dump.dumpFile("exitTest.dot");
