@@ -32,6 +32,6 @@ public class Intersection {
       newGraph = Complement(Union(Complement(this.graphA).getGraph(),Complement(this.graphB).getGraph()).getGraph()).getGraph();
 
       DumpDot dump = new DumpDot(newGraph);
-      dump.dumpFile("exitTest.dot");
+      dump.dumpFile("exitTestInter.dot");
   }
 }

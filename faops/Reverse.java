@@ -27,7 +27,7 @@ public class Reverse {
         edges();
 
         DumpDot dump = new DumpDot(reversedGraph);
-        dump.dumpFile("exitTest.dot");
+        dump.dumpFile("exitTestRev.dot");
     }
 
     private void nodes(){

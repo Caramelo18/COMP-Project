@@ -30,6 +30,6 @@ public class Product {
 
 
       DumpDot dump = new DumpDot(newGraph);
-      dump.dumpFile("exitTest.dot");
+      dump.dumpFile("exitTestProd.dot");
   }
 }
