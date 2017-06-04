@@ -32,7 +32,7 @@ public class Union {
         createEdges();
 
         DumpDot dump = new DumpDot(newGraph);
-        dump.dumpFile("exitTestUn.dot");
+        dump.dumpFile("exitTest.dot");
     }
 
     private void createNodes(){

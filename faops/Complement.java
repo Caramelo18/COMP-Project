@@ -27,7 +27,7 @@ public void complement(){
         createEdges();
 
         DumpDot dump = new DumpDot(newGraph);
-        dump.dumpFile("exitTestComp.dot");
+        dump.dumpFile("exitTest.dot");
 }
 
 private void createNodes(){

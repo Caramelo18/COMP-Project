@@ -35,7 +35,7 @@ public class Concatenate {
         joinEdges();
 
         DumpDot dump = new DumpDot(concatenatedGraph);
-        dump.dumpFile("exitTestConc.dot");
+        dump.dumpFile("exitTest.dot");
     }
 
     private void joinNodes()
