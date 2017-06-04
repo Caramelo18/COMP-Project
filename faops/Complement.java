@@ -1,9 +1,13 @@
 package faops;
 
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.ArrayList;
 import org.graphstream.graph.*;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.*;
+import org.graphstream.graph.implementations.AbstractEdge;
+import org.graphstream.graph.implementations.DefaultGraph;
 
 public class Complement {
 private MultiGraph newGraph;
@@ -39,6 +43,8 @@ private void createNodes(){
                 String tempShape = tempNode.getAttribute("shape").toString();
                 String tempID = tempNode.getId();
 
+
+
                 if (tempShape.equals("point")) {
                         MultiNode newNode = new MultiNode(this.newGraph, tempID);
                         newGraph.addNode(tempID);
@@ -62,17 +68,17 @@ private void createEdges(){
         while(tempIterator.hasNext()) {
                 AbstractEdge tempEdge = tempIterator.next();
 
-                if(!tempEdge.hasAttribute("label"))
-                        continue;
-
-                String tempID = tempEdge.getId();
-                String tempInput = tempEdge.getAttribute("label").toString();
                 String tempSource = tempEdge.getNode0().getId();
                 String tempDest = tempEdge.getNode1().getId();
 
-                newGraph.addEdge(tempID,tempSource,tempDest,true);
-                /*newGraph.addEdge(id,tempSource,tempDest,true);
-                id++*/;
+                newGraph.addEdge(String.valueOf(id),tempSource,tempDest,true);
+
+                if(tempEdge.hasAttribute("label")){
+                  String tempInput = tempEdge.getAttribute("label").toString();
+                  newGraph.getEdge(String.valueOf(id)).addAttribute("label",tempInput);
+                }
+
+                id++;
         }
 }
 
