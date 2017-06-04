@@ -1,8 +1,8 @@
 package faops;
 
 import java.util.Iterator;
-import java.util.HashMap;
 import java.util.Vector;
+import java.util.HashMap;
 import org.graphstream.graph.*;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.*;
@@ -12,11 +12,11 @@ public class Multiply {
 
   private MultiGraph graphA;
   private MultiGraph graphB;
+
   private HashMap<String,Vector<String>> aNodes;
   private HashMap<String,Vector<String>> bNodes;
 
-  public Multiply(MultiGraph graphA, MultiGraph graphB)
-  {
+  public Multiply(MultiGraph graphA, MultiGraph graphB){
       this.graphA = graphA;
       this.graphB = graphB;
 
@@ -27,8 +27,7 @@ public class Multiply {
       multiply();
   }
 
-  public MultiGraph getGraph()
-  {
+  public MultiGraph getGraph(){
       return newGraph;
   }
 
@@ -45,9 +44,10 @@ public class Multiply {
       Iterator<AbstractNode> aIterator = graphA.getNodeIterator();
       Iterator<AbstractNode> bIterator = graphB.getNodeIterator();
       Vector<String> tempNodes = new Vector<String>();
+      Vector<String> tempNodes2 = new Vector<String>();
 
       while(aIterator.hasNext()){
-          tempNodes.clear();
+          tempNodes = new Vector<String>();
           AbstractNode nodeA = aIterator.next();
 
           if(nodeA.getAttribute("shape").equals("point"))
@@ -56,6 +56,8 @@ public class Multiply {
           String nA = nodeA.getId();
 
           while(bIterator.hasNext()){
+              tempNodes2 = new Vector<String>();
+
               AbstractNode nodeB = bIterator.next();
 
               if(nodeB.getAttribute("shape").equals("point"))
@@ -73,13 +75,19 @@ public class Multiply {
               if (nodeA.getAttribute("shape").equals("doublecircle") && nodeB.getAttribute("shape").equals("doublecircle")) {
                 newGraph.getNode(nodeId).setAttribute("shape", "doublecircle");
               }
-              bNodes.put(nB,tempNodes);
+
+              if (bNodes.containsKey(nB)) {
+                tempNodes2 = bNodes.get(nB);
+                tempNodes2.add(nodeId);
+                bNodes.replace(nB,tempNodes2);
+              } else {
+                tempNodes2.add(nodeId);
+                bNodes.put(nB,tempNodes2);
+              }
           }
+
           bIterator = graphB.getNodeIterator();
           aNodes.put(nA,tempNodes);
       }
-
-      System.out.println(aNodes.toString());
-      System.out.println(bNodes.toString());
   }
 }
