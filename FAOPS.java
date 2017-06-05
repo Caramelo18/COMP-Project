@@ -6,10 +6,13 @@ import faops.*;
 // código Java que invoca o parser
 public class FAOPS/*@bgen(jjtree)*/implements FAOPSTreeConstants, FAOPSConstants {/*@bgen(jjtree)*/
   protected static JJTFAOPSState jjtree = new JJTFAOPSState();public static void main(String args[]) throws ParseException {
-        // criação do objecto utilizando o constructor com argumento para
+        if (args.length != 1) {
+            System.out.println("It is required to specify the .faops file to interpret");
+            System.exit(0);
+        }
         FileReader fr = null;
         try {
-            fr = new FileReader("test.faops");
+            fr = new FileReader(args[0]);
 
         } catch (Throwable e) {
             System.out.println("File not found");
@@ -20,9 +23,13 @@ public class FAOPS/*@bgen(jjtree)*/implements FAOPSTreeConstants, FAOPSConstants
             Start start = parser.Start();
             start.dump("");
             start.eval();
+        } catch (UndeclaredVariable e) {
+            System.out.println(e.getMessage());
+            System.exit(0);
         } catch (Throwable e) {
             e.printStackTrace();
                 System.out.println("Rejected.");
+            System.exit(0);
         }
     }
 

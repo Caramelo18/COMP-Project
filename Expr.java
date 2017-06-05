@@ -12,11 +12,17 @@ class Expr extends SimpleNode {
     super(p, id);
   }
 
-  public MultiGraph eval() {
+  public MultiGraph eval() throws UndeclaredVariable {
       for (int i = 0; i < children.length; i++) {
           if (children[i] instanceof FA) {
               String variableName = ((FA) children[i]).name;
-              return variables.get(variableName);
+              MultiGraph fa = variables.get(variableName);
+
+            if (fa != null) {
+                return fa;
+            } else {
+                throw new UndeclaredVariable(variableName);
+            }
           } else if (children[i] instanceof Stmt) {
               return ((Stmt) children[i]).eval();
           } else if (children[i] instanceof Op2) {
