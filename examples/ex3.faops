@@ -1,0 +1,8 @@
+FA A = new("graphA.dot");
+FA B = new("graphC.dot");
+FA C = new("graphD.dot");
+FA D = A int B;
+FA E = not(C);
+FA F = rev(D . E);
+FA G = A + F;
+G.dump("dot");
