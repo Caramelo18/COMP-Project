@@ -25,9 +25,6 @@ public class Reverse {
 
         nodes();
         edges();
-
-        DumpDot dump = new DumpDot(reversedGraph);
-        dump.dumpFile("exitTest.dot");
     }
 
     private void nodes(){
@@ -47,9 +44,6 @@ public class Reverse {
                 else if(type.equals("doublecircle")){
                     acceptState.add(node.getId());
                 }
-                //node.setAttribute("shape", newType);
-            //    System.out.println("Previous type: " +  type);
-            //    System.out.println("New type: " +  node.getAttribute("shape").toString( ));
             }
         }
     }
@@ -59,7 +53,6 @@ public class Reverse {
         int i = 5656;
         while(iterator.hasNext()){
             AbstractEdge e = iterator.next();
-        //    System.out.println("From " + e.getNode0() + " to " + e.getNode1());
             String source = e.getNode0().getId();
             String dest = e.getNode1().getId();
 
@@ -76,11 +69,6 @@ public class Reverse {
                 reversedGraph.getEdge(String.valueOf(i)).addAttribute("label", e.getAttribute("label").toString());
             i++;
         }
-        /*    Iterator<AbstractEdge> iterator2 = reversedGraph.getEdgeIterator();
-            while(iterator2.hasNext()){
-                AbstractEdge e = iterator2.next();
-                System.out.println("New From " + e.getNode0() + " to " + e.getNode1());
-            }*/
     }
 
     private String getNewNodeType(String currentType){

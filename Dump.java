@@ -15,7 +15,7 @@ class Dump extends SimpleNode {
 
   public void save() {
       String variableName = ((FA) children[0]).name;
-      MultiGraph fa = ((Start) parent).getVariable(variableName);
+      MultiGraph fa = variables.get(variableName);
 
       if (fa != null) {
           DumpDot dot = new DumpDot(fa);

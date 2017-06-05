@@ -1,2 +1,3 @@
-FA A = new("A.dot");
-A.dump("APAGA-ME.dot");
+FA A = new("B.dot");
+FA B = rev(A);
+B.dump("APAGA-ME.dot");

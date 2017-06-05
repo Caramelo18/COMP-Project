@@ -19,6 +19,8 @@ class Stmt extends SimpleNode {
               ParseDot dot = new ParseDot();
               dot.parseFile(((Path) children[i]).name);
               return dot.getGraph();
+          } else if (children[i] instanceof Expr) {
+              return ((Expr) children[i]).eval();
           }
       }
 
