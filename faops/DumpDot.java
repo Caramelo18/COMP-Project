@@ -24,4 +24,15 @@ public class DumpDot {
             e.printStackTrace();
         }
     }
+
+    public static void dumpFile(String path, MultiGraph graph) {
+        graph.addAttribute("rankdir", "LR");
+        FileSinkDOT fs = new FileSinkDOT(true);
+
+        try {
+            fs.writeAll(graph, path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
