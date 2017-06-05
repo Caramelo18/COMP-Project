@@ -1,9 +1,0 @@
-digraph finite_state_machine {
-    node [shape = point ]; Ai;
-    node [shape = doublecircle]; Af;
-
-    node [shape = circle];
-    Ai -> A1;
-    A1 -> Af [ label = "a" ];
-    Af -> Af  [ label = "b" ];
-}
