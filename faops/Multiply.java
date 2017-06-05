@@ -15,6 +15,8 @@ public class Multiply {
 
   private HashMap<String,Vector<String>> aNodes;
   private HashMap<String,Vector<String>> bNodes;
+  Vector<String> initNodeA;
+  Vector<String> initNodeB;
 
   public Multiply(MultiGraph graphA, MultiGraph graphB){
       this.graphA = graphA;
@@ -22,6 +24,11 @@ public class Multiply {
 
       this.aNodes = new HashMap<String,Vector<String>>();
       this.bNodes = new HashMap<String,Vector<String>>();
+
+      this.initNodeA = new Vector<String>();
+      this.initNodeB = new Vector<String>();
+      this.initNodeA.add("A");
+      this.initNodeB.add("C");
 
       newGraph = new MultiGraph("multiply");
       multiply();
@@ -34,7 +41,7 @@ public class Multiply {
 // TODO - FALTA TERMINAR
   private void multiply(){
       createNodes();
-      //createEdges();
+      createEdges();
 
       DumpDot dump = new DumpDot(newGraph);
       dump.dumpFile("exitTest.dot");
@@ -45,6 +52,9 @@ public class Multiply {
       Iterator<AbstractNode> bIterator = graphB.getNodeIterator();
       Vector<String> tempNodes = new Vector<String>();
       Vector<String> tempNodes2 = new Vector<String>();
+
+      newGraph.addNode("Start");
+      newGraph.getNode("Start").setAttribute("shape", "point");
 
       while(aIterator.hasNext()){
           tempNodes = new Vector<String>();
@@ -89,5 +99,58 @@ public class Multiply {
           bIterator = graphB.getNodeIterator();
           aNodes.put(nA,tempNodes);
       }
+  }
+
+  private void createEdges(){
+    Iterator<AbstractEdge> aIterator = graphA.getEdgeIterator();
+    Iterator<AbstractEdge> bIterator = graphB.getEdgeIterator();
+
+    int id = 1096;
+
+    for (String x : initNodeA) {
+      for (String y : initNodeB) {
+        newGraph.addEdge(String.valueOf(id),"Start", x + y,true);
+        id++;
+      }
+    }
+
+    while(aIterator.hasNext()){
+        AbstractEdge aEdge = aIterator.next();
+
+        String inputA;
+
+        if (aEdge.hasAttribute("label")) {
+          inputA = aEdge.getAttribute("label").toString();
+          String sourceA = aEdge.getNode0().getId();
+          String destA = aEdge.getNode1().getId();
+
+          while(bIterator.hasNext()){
+              AbstractEdge bEdge = bIterator.next();
+              String inputB;
+
+              if(bEdge.hasAttribute("label")){
+                inputB = bEdge.getAttribute("label").toString();
+                String sourceB = bEdge.getNode0().getId();
+                String destB = bEdge.getNode1().getId();
+
+                if (inputA.equals(inputB)) {
+                  newGraph.addEdge(String.valueOf(id),sourceA + sourceB,destA + destB,true);
+                  newGraph.getEdge(String.valueOf(id)).addAttribute("label",inputA);
+                }
+
+              }
+              id++;
+          }
+
+          id++;
+        }
+        bIterator = graphB.getEdgeIterator();
+    }
+  }
+
+  private Vector<String> getInitialNodes(MultiGraph graph){
+    Vector<String> ret = new Vector<String>();
+
+
   }
 }
