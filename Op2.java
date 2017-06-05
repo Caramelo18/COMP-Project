@@ -17,13 +17,14 @@ class Op2 extends SimpleNode {
   }
 
   public MultiGraph eval(MultiGraph graph) {
-      if (op == 1) {
-          Reverse reverser = new Reverse(graph);
-          return reverser.getReversed();
-      } else if (op == 0) {
-          Complement complementer = new Complement(graph);
-          return complementer.getGraph();
-      }
+     if (op == 0) {
+         Complement complementer = new Complement(graph);
+         return complementer.getGraph();
+     }
+     else if (op == 1) {
+           Reverse reverser = new Reverse(graph);
+           return reverser.getReversed();
+       }
 
       return null;
   }

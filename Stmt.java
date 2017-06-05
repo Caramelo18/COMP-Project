@@ -20,7 +20,16 @@ class Stmt extends SimpleNode {
               dot.parseFile(((Path) children[i]).name);
               return dot.getGraph();
           } else if (children[i] instanceof Expr) {
-              return ((Expr) children[i]).eval();
+              if (children.length == i + 1) {
+                  return ((Expr) children[i]).eval();
+              } else {
+                  continue;
+              }
+          } else if (children[i] instanceof Op1) {
+              MultiGraph leftOperand = ((Expr) children[i - 1]).eval();
+              MultiGraph rightOperand = ((Expr) children[i + 1]).eval();
+
+              return ((Op1) children[i]).eval(leftOperand, rightOperand);
           }
       }
 

@@ -1,3 +1,4 @@
 FA A = new("B.dot");
-FA B = not(A);
-B.dump("APAGA-ME.dot");
+FA B = new("A.dot");
+FA C = A . B;
+C.dump("APAGA-ME.dot");
