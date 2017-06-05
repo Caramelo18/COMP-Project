@@ -1,0 +1,120 @@
+    PARSER_BEGIN(FAOPS)
+
+import java.io.FileReader;
+
+import faops.*;
+
+// código Java que invoca o parser
+public class FAOPS {
+    public static void main(String args[]) throws ParseException {
+        // criação do objecto utilizando o constructor com argumento para
+        FileReader fr = null;
+        try {
+            fr = new FileReader("test.faops");
+
+        } catch (Throwable e) {
+            System.out.println("File not found");
+        }
+
+        FAOPS parser = new FAOPS(fr);
+        try {
+            while(true)
+                parser.start();
+        } catch (Throwable e) {
+            e.printStackTrace();
+    		System.out.println("Rejected.");
+    	}
+    }
+}
+PARSER_END(FAOPS)
+
+// símbolos que não devem ser considerados na análise
+SKIP :
+{
+    " " | "\t" | "\r"
+}
+
+// definição dos tokens (símbolos terminais)
+TOKEN :
+{
+    < FA : "FA" >
+    | < FANAME : (["A"-"Z"])+ >
+    | < QUOTES : ("\"") >
+    | < FILENAME : ((["a"-"z"]|["A"-"Z"]|"-"|"_"|["0"-"9"]|".")+ ".dot") >
+    | < MULTIPLY : "x" >
+    | < CONCATENATE : "." >
+    | < INTERSECTION : "int" >
+    | < UNION : "+" >
+    | < COMPLEMENT : "not(" >
+    | < REVERSE : "rev(" >
+    | < NEW : "new(" >
+    | < DUMP : ".dump(" >
+    | < ASSIGN : "=" >
+    | < BEGINOPERATION : "(" >
+    | < ENDOPERATION : ")" >
+    | < ENDLINE : ";" >
+    | < LF : "\n" | "\r" | "\r\n" >
+}
+
+void start() : {} //no bloco definido pelas primeiras chavetas declaram-se variáveis para a função
+{
+
+    ((<FA> <FANAME> <ASSIGN> stmt())
+    | dump()) ((<ENDLINE>)? <LF>) {
+        System.out.println("Line Accepted!");
+    }
+    | <EOF> {
+        System.out.println("File Accepted");
+        System.exit(0);
+    }
+}
+
+void stmt() : {Token path;}
+{
+    (<NEW> <QUOTES> (path = <FILENAME>) <QUOTES> <ENDOPERATION>) {}
+    | (expr() (op1() expr())?)
+/*
+    ParseDot parser = new ParseDot();
+    parser.parseFile(path.image);
+    DumpDot dump = new DumpDot(parser.getGraph());
+    dump.dumpFile("exit" + path.image);
+
+    //Reverse rev = new Reverse(parser.getGraph());
+    //Complement comp = new Complement(parser.getGraph());
+    //Complement comp2 = new Complement(comp.getGraph());
+    ParseDot parser1 = new ParseDot();
+    parser1.parseFile("B.dot");
+    //Complement comp = new Complement(parser1.getGraph());
+    //Complement comp2 = new Complement(comp.getGraph());
+    //Reverse rev = new Reverse(parser1.getGraph());
+    //Concatenate con = new Concatenate(parser.getGraph(), parser1.getGraph());
+    Union un = new Union(parser.getGraph(), parser1.getGraph());
+    }|
+    */
+}
+
+void expr() : {}
+{
+    (op2() stmt() <ENDOPERATION>) |
+    (<BEGINOPERATION> stmt() <ENDOPERATION>) |
+    (<FANAME>)
+}
+
+void op1() : {}
+{
+    (<MULTIPLY>) |
+    (<CONCATENATE>) |
+    (<INTERSECTION>) |
+    (<UNION>)
+}
+
+void op2() : {}
+{
+    (<COMPLEMENT>) |
+    (<REVERSE>)
+}
+
+void dump() : {}
+{
+    <FANAME> <DUMP> <QUOTES> <FILENAME> <QUOTES> <ENDOPERATION>
+}
