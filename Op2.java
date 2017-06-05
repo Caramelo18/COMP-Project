@@ -2,6 +2,7 @@
 /* JavaCCOptions:MULTI=true,NODE_USES_PARSER=false,VISITOR=false,TRACK_TOKENS=false,NODE_PREFIX=,NODE_EXTENDS=,NODE_FACTORY=,SUPPORT_CLASS_VISIBILITY_PUBLIC=true */
 import org.graphstream.graph.implementations.MultiGraph;
 import faops.Reverse;
+import faops.Complement;
 
 public
 class Op2 extends SimpleNode {
@@ -19,6 +20,9 @@ class Op2 extends SimpleNode {
       if (op == 1) {
           Reverse reverser = new Reverse(graph);
           return reverser.getReversed();
+      } else if (op == 0) {
+          Complement complementer = new Complement(graph);
+          return complementer.getGraph();
       }
 
       return null;
