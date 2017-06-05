@@ -93,21 +93,33 @@ void expr() : {}
 {
     (op2() stmt() <ENDOPERATION>) |
     (<BEGINOPERATION> stmt() <ENDOPERATION>) |
-    (<FANAME>)
+    (variable())
 }
 
-void op1() : {}
+void op1() : {Token op;}
 {
-    (<MULTIPLY>) |
-    (<CONCATENATE>) |
-    (<INTERSECTION>) |
-    (<UNION>)
+    (op = <MULTIPLY>) {
+        jjtThis.op = 0;
+    }
+    | (op = <CONCATENATE>) {
+        jjtThis.op = 1;
+    }
+    | (op = <INTERSECTION>) {
+        jjtThis.op = 2;
+    }
+    | (op = <UNION>) {
+        jjtThis.op = 3;
+    }
 }
 
-void op2() : {}
+void op2() : {Token op;}
 {
-    (<COMPLEMENT>) |
-    (<REVERSE>)
+    (op = <COMPLEMENT>) {
+        jjtThis.op = 0;
+    }
+    | (op = <REVERSE>) {
+        jjtThis.op = 1;
+    }
 }
 
 void dump() : {}

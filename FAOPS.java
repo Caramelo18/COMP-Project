@@ -213,7 +213,7 @@ if (jjtc000) {
         break;
         }
       case FANAME:{
-        jj_consume_token(FANAME);
+        variable();
         break;
         }
       default:
@@ -243,25 +243,37 @@ if (jjtc000) {
 }
 
   static final public void op1() throws ParseException {/*@bgen(jjtree) op1 */
-  op1 jjtn000 = new op1(JJTOP1);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
+              op1 jjtn000 = new op1(JJTOP1);
+              boolean jjtc000 = true;
+              jjtree.openNodeScope(jjtn000);Token op;
     try {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case MULTIPLY:{
-        jj_consume_token(MULTIPLY);
+        op = jj_consume_token(MULTIPLY);
+jjtree.closeNodeScope(jjtn000, true);
+                        jjtc000 = false;
+jjtn000.op = 0;
         break;
         }
       case CONCATENATE:{
-        jj_consume_token(CONCATENATE);
+        op = jj_consume_token(CONCATENATE);
+jjtree.closeNodeScope(jjtn000, true);
+                             jjtc000 = false;
+jjtn000.op = 1;
         break;
         }
       case INTERSECTION:{
-        jj_consume_token(INTERSECTION);
+        op = jj_consume_token(INTERSECTION);
+jjtree.closeNodeScope(jjtn000, true);
+                              jjtc000 = false;
+jjtn000.op = 2;
         break;
         }
       case UNION:{
-        jj_consume_token(UNION);
+        op = jj_consume_token(UNION);
+jjtree.closeNodeScope(jjtn000, true);
+                       jjtc000 = false;
+jjtn000.op = 3;
         break;
         }
       default:
@@ -277,17 +289,23 @@ if (jjtc000) {
 }
 
   static final public void op2() throws ParseException {/*@bgen(jjtree) op2 */
-  op2 jjtn000 = new op2(JJTOP2);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
+              op2 jjtn000 = new op2(JJTOP2);
+              boolean jjtc000 = true;
+              jjtree.openNodeScope(jjtn000);Token op;
     try {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case COMPLEMENT:{
-        jj_consume_token(COMPLEMENT);
+        op = jj_consume_token(COMPLEMENT);
+jjtree.closeNodeScope(jjtn000, true);
+                          jjtc000 = false;
+jjtn000.op = 0;
         break;
         }
       case REVERSE:{
-        jj_consume_token(REVERSE);
+        op = jj_consume_token(REVERSE);
+jjtree.closeNodeScope(jjtn000, true);
+                         jjtc000 = false;
+jjtn000.op = 1;
         break;
         }
       default:

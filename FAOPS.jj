@@ -199,7 +199,7 @@ void expr() : {/*@bgen(jjtree) expr */
 /*@egen*/
     (op2() stmt() <ENDOPERATION>) |
     (<BEGINOPERATION> stmt() <ENDOPERATION>) |
-    (<FANAME>)/*@bgen(jjtree)*/
+    (variable())/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -223,17 +223,45 @@ void expr() : {/*@bgen(jjtree) expr */
 }
 
 void op1() : {/*@bgen(jjtree) op1 */
-  op1 jjtn000 = new op1(JJTOP1);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/}
+              op1 jjtn000 = new op1(JJTOP1);
+              boolean jjtc000 = true;
+              jjtree.openNodeScope(jjtn000);
+/*@egen*/Token op;}
 {/*@bgen(jjtree) op1 */
     try {
 /*@egen*/
-    (<MULTIPLY>) |
-    (<CONCATENATE>) |
-    (<INTERSECTION>) |
-    (<UNION>)/*@bgen(jjtree)*/
+    (op = <MULTIPLY>)/*@bgen(jjtree)*/
+                      {
+                        jjtree.closeNodeScope(jjtn000, true);
+                        jjtc000 = false;
+                      }
+/*@egen*/ {
+        jjtn000.op = 0;
+    }
+    | (op = <CONCATENATE>)/*@bgen(jjtree)*/
+                           {
+                             jjtree.closeNodeScope(jjtn000, true);
+                             jjtc000 = false;
+                           }
+/*@egen*/ {
+        jjtn000.op = 1;
+    }
+    | (op = <INTERSECTION>)/*@bgen(jjtree)*/
+                            {
+                              jjtree.closeNodeScope(jjtn000, true);
+                              jjtc000 = false;
+                            }
+/*@egen*/ {
+        jjtn000.op = 2;
+    }
+    | (op = <UNION>)/*@bgen(jjtree)*/
+                     {
+                       jjtree.closeNodeScope(jjtn000, true);
+                       jjtc000 = false;
+                     }
+/*@egen*/ {
+        jjtn000.op = 3;
+    }/*@bgen(jjtree)*/
     } finally {
       if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
@@ -243,15 +271,29 @@ void op1() : {/*@bgen(jjtree) op1 */
 }
 
 void op2() : {/*@bgen(jjtree) op2 */
-  op2 jjtn000 = new op2(JJTOP2);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/}
+              op2 jjtn000 = new op2(JJTOP2);
+              boolean jjtc000 = true;
+              jjtree.openNodeScope(jjtn000);
+/*@egen*/Token op;}
 {/*@bgen(jjtree) op2 */
     try {
 /*@egen*/
-    (<COMPLEMENT>) |
-    (<REVERSE>)/*@bgen(jjtree)*/
+    (op = <COMPLEMENT>)/*@bgen(jjtree)*/
+                        {
+                          jjtree.closeNodeScope(jjtn000, true);
+                          jjtc000 = false;
+                        }
+/*@egen*/ {
+        jjtn000.op = 0;
+    }
+    | (op = <REVERSE>)/*@bgen(jjtree)*/
+                       {
+                         jjtree.closeNodeScope(jjtn000, true);
+                         jjtc000 = false;
+                       }
+/*@egen*/ {
+        jjtn000.op = 1;
+    }/*@bgen(jjtree)*/
     } finally {
       if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);

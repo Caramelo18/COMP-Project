@@ -11,5 +11,7 @@ class variable extends SimpleNode {
     super(p, id);
   }
 
+  public String toString() { return FAOPSTreeConstants.jjtNodeName[id] + " " + name; }
+
 }
 /* JavaCC - OriginalChecksum=4de487d321f9f97c784bb1c4a7729716 (do not edit this line) */

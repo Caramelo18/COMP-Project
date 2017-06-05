@@ -11,5 +11,6 @@ class path extends SimpleNode {
     super(p, id);
   }
 
+  public String toString() { return FAOPSTreeConstants.jjtNodeName[id] + " " + name; }
 }
 /* JavaCC - OriginalChecksum=9c28486dcd8a9f38d681940eccf4fba2 (do not edit this line) */

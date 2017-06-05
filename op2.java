@@ -2,6 +2,8 @@
 /* JavaCCOptions:MULTI=true,NODE_USES_PARSER=false,VISITOR=false,TRACK_TOKENS=false,NODE_PREFIX=,NODE_EXTENDS=,NODE_FACTORY=,SUPPORT_CLASS_VISIBILITY_PUBLIC=true */
 public
 class op2 extends SimpleNode {
+    public int op = -1;
+    public String[] operations = {"complement", "reverse"};
   public op2(int id) {
     super(id);
   }
@@ -10,5 +12,6 @@ class op2 extends SimpleNode {
     super(p, id);
   }
 
+  public String toString() { return FAOPSTreeConstants.jjtNodeName[id] + " " + operations[op]; }
 }
 /* JavaCC - OriginalChecksum=433a96025f8c3843d3069b98f94d1990 (do not edit this line) */
