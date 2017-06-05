@@ -1,17 +1,17 @@
 digraph {
 	graph [ "rankdir"="LR" ];
-	"afbf1" ["shape"="doublecircle"];
-	"afbf2" ["shape"="doublecircle"];
-	"afb1" ["shape"="circle"];
-	"afb2" ["shape"="circle"];
-	"a1bf1" ["shape"="circle"];
-	"a1bf2" ["shape"="circle"];
-	"a1b1" ["shape"="circle"];
-	"a1b2" ["shape"="circle"];
-	"a1b1" -> "afb2" ;
-	"a1b2" -> "afbf2" ;
-	"a1bf1" -> "afbf1" ;
-	"afb1" -> "afbf1" ;
-	"afb2" -> "afbf1" ;
-	"afbf1" -> "afb1" ;
+	"AfBf1" ["shape"="doublecircle"];
+	"AfBf2" ["shape"="doublecircle"];
+	"AfB1" ["shape"="doublecircle"];
+	"AfB2" ["shape"="doublecircle"];
+	"A1Bf1" ["shape"="doublecircle"];
+	"A1Bf2" ["shape"="doublecircle"];
+	"A1B1" ["shape"="circle"];
+	"A1B2" ["shape"="circle"];
+	"A1B1" -> "AfB2" ["label"="a"];
+	"A1B2" -> "AfBf2" ["label"="a"];
+	"A1Bf1" -> "AfBf1" ["label"="a"];
+	"AfB1" -> "AfBf1" ["label"="b"];
+	"AfB2" -> "AfBf1" ["label"="b"];
+	"AfBf1" -> "AfB1" ["label"="b"];
 }
