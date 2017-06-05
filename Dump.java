@@ -13,13 +13,15 @@ class Dump extends SimpleNode {
     super(p, id);
   }
 
-  public void save() {
+  public void save() throws UndeclaredVariable {
       String variableName = ((FA) children[0]).name;
       MultiGraph fa = variables.get(variableName);
 
       if (fa != null) {
           DumpDot dot = new DumpDot(fa);
           dot.dumpFile(((Path) children[1]).name);
+      } else {
+          throw new UndeclaredVariable(variableName);
       }
   }
 

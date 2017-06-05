@@ -11,7 +11,7 @@ class Start extends SimpleNode {
         super(p, id);
     }
 
-    public void eval() {
+    public void eval() throws UndeclaredVariable {
         for (int i = 0; i < children.length; i++) {
             if (children[i] instanceof FA) {
                 String variableName = ((FA) children[i]).name;

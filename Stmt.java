@@ -13,7 +13,7 @@ class Stmt extends SimpleNode {
     super(p, id);
   }
 
-  public MultiGraph eval() {
+  public MultiGraph eval() throws UndeclaredVariable {
       for (int i = 0; i < children.length; i++) {
           if (children[i] instanceof Path) {
               ParseDot dot = new ParseDot();
