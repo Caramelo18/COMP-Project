@@ -40,8 +40,6 @@ public class Multiply {
       createNodes();
       createEdges();
 
-      System.out.println(getInitialNodes(this.graphA));
-
       DumpDot dump = new DumpDot(newGraph);
       dump.dumpFile("exitTest.dot");
   }
