@@ -18,8 +18,8 @@ public class FAOPS/*@bgen(jjtree)*/implements FAOPSTreeConstants, FAOPSConstants
         FAOPS parser = new FAOPS(fr);
         try {
             Start start = parser.Start();
-            start.eval();
             start.dump("");
+            start.eval();
         } catch (Throwable e) {
             e.printStackTrace();
                 System.out.println("Rejected.");
