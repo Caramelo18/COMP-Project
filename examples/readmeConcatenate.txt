@@ -1,0 +1,1 @@
+Concatenation of the graph A with the graph B
