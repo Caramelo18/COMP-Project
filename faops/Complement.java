@@ -29,9 +29,6 @@ public MultiGraph getGraph(){
 public void complement(){
         createNodes();
         createEdges();
-
-        DumpDot dump = new DumpDot(newGraph);
-        dump.dumpFile("exitTest.dot");
 }
 
 private void createNodes(){

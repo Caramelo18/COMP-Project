@@ -1,3 +1,3 @@
 FA A = new("B.dot");
-FA B = rev(A);
+FA B = not(A);
 B.dump("APAGA-ME.dot");
