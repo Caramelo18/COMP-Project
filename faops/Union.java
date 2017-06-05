@@ -38,20 +38,10 @@ public class Union {
     private void createNodes(){
         Iterator<AbstractNode> aIterator = graphA.getNodeIterator();
         Iterator<AbstractNode> bIterator = graphB.getNodeIterator();
-        boolean startingA = false;
-        boolean startingB = false;
+        boolean startingDefined = false;
 
-
-        while(aIterator.hasNext()){
-            
+        while(aIterator.hasNext()){            
             AbstractNode nodeA = aIterator.next();
-
-            if(isPoint(nodeA)){
-                if(!startingB)
-                    startingA = true;
-                continue;
-            }
-                
 
             String nA = nodeA.getId();
 
@@ -59,26 +49,29 @@ public class Union {
                 AbstractNode nodeB = bIterator.next();
 
                 if(isPoint(nodeB)){
-                    if(startingA){
-                        startingB = true;
+                    if(isPoint(nodeA) && !startingDefined){
                         String nB = nodeB.getId();
                         String nodeId = nA + nB;
+
                         MultiNode newNode = new MultiNode(newGraph, nodeId);
                         newGraph.addNode(nodeId);
                         String nodeType = getNodeType(nodeA, nodeB);
-                        newGraph.getNode(nodeId).setAttribute("shape", "point");    
-
-                    } else
+                        newGraph.getNode(nodeId).setAttribute("shape", "point");
+                        startingDefined = true;
+                    } else {
                         continue;
-
+                    }                    
                 } else {
-                    String nB = nodeB.getId();
-                    String nodeId = nA + nB;
-                    MultiNode newNode = new MultiNode(newGraph, nodeId);
-                    newGraph.addNode(nodeId);
-                    String nodeType = getNodeType(nodeA, nodeB);
-                    newGraph.getNode(nodeId).setAttribute("shape", nodeType);
-                }                
+                    if(!isPoint(nodeA)){
+                        String nB = nodeB.getId();
+                        String nodeId = nA + nB;
+
+                        MultiNode newNode = new MultiNode(newGraph, nodeId);
+                        newGraph.addNode(nodeId);
+                        String nodeType = getNodeType(nodeA, nodeB);
+                        newGraph.getNode(nodeId).setAttribute("shape", nodeType);
+                    }                    
+                }                  
             }
 
             bIterator = graphB.getNodeIterator();
@@ -92,21 +85,21 @@ public class Union {
         int id = 9871;
         while(aIterator.hasNext()){
             AbstractEdge aEdge = aIterator.next();
+            String inputA = "";
 
-            if(!aEdge.hasAttribute("label"))
-                continue;
-
-            String inputA = aEdge.getAttribute("label").toString();
+            if(aEdge.hasAttribute("label"))
+                inputA = aEdge.getAttribute("label").toString();
+            
             String sourceA = aEdge.getNode0().getId();
             String destA = aEdge.getNode1().getId();
 
             while(bIterator.hasNext()){
                 AbstractEdge bEdge = bIterator.next();
+                String inputB = "";
 
-                if(!bEdge.hasAttribute("label"))
-                  continue;
+                if(bEdge.hasAttribute("label"))
+                    inputB = bEdge.getAttribute("label").toString();
 
-                String inputB = bEdge.getAttribute("label").toString();
                 String sourceB = bEdge.getNode0().getId();
                 String destB = bEdge.getNode1().getId();
 
@@ -115,7 +108,10 @@ public class Union {
                     String dest = destA + destB;
 
                     newGraph.addEdge(String.valueOf(id), source, dest, true);
-                    newGraph.getEdge(String.valueOf(id)).addAttribute("label", bEdge.getAttribute("label").toString());
+
+                    if(bEdge.hasAttribute("label"))
+                        newGraph.getEdge(String.valueOf(id)).addAttribute("label", bEdge.getAttribute("label").toString());
+
                     id++;
                 }
             }
@@ -128,8 +124,10 @@ public class Union {
     private boolean isPoint(AbstractNode node){
         if(node.hasAttribute("shape")){
             String shape = node.getAttribute("shape").toString();
+
             return shape.equals("point");
         }
+
         return false;
     }
 

@@ -1,5 +1,6 @@
 digraph {
 	graph [ "rankdir"="LR" ];
+	"AiBi" ["shape"="point"];
 	"AfBf1" ["shape"="doublecircle"];
 	"AfBf2" ["shape"="doublecircle"];
 	"AfB1" ["shape"="doublecircle"];
@@ -8,6 +9,7 @@ digraph {
 	"A1Bf2" ["shape"="doublecircle"];
 	"A1B1" ["shape"="circle"];
 	"A1B2" ["shape"="circle"];
+	"AiBi" -> "A1B1" ;
 	"A1B1" -> "AfB2" ["label"="a"];
 	"A1B2" -> "AfBf2" ["label"="a"];
 	"A1Bf1" -> "AfBf1" ["label"="a"];
