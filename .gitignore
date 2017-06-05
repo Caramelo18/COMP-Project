@@ -1,7 +1,2 @@
 *.class
-ParseException.java
-SimpleCharStream.java
-Token.java
-TokenMgrError.java
-FAOPS*.java
 gs-core-1.3.jar
