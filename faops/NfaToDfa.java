@@ -11,6 +11,7 @@ public class NfaToDfa {
 private MultiGraph nfa;
 private MultiGraph dfa;
 private Vector<String> nfaInitNodes;
+private Vector<String> nfaFinalNodes;
 private Vector<String> alphabet;
 private HashMap<String,Vector<String> > newNodes;
 
@@ -18,11 +19,15 @@ public NfaToDfa(MultiGraph nfa){
         this.nfa = nfa;
         this.dfa = new MultiGraph("dfa");
         this.nfaInitNodes = getInitialNodes(nfa);
+        this.nfaFinalNodes = getFinalNodes(nfa);
         this.newNodes =  new HashMap<String,Vector<String> >();
 
         getAlphabet();
         createNodes();
         createEdges();
+        for (int i = 0; i < 10 ; i++) {
+          cleanGraph();
+        }
 
         DumpDot dump = new DumpDot(dfa);
         dump.dumpFile("exitTest.dot");
@@ -57,28 +62,48 @@ private void createNodes(){
                         addHash(x,nodeId);
                 }
 
-                //System.out.println(newNodes + "\n"+ "\n"+ "\n"+ "\n");
-
 
                 MultiNode newNode = new MultiNode(dfa, nodeId);
                 dfa.addNode(nodeId);
+        }
 
-                /*  Vector<String> emptyNodes = getEmptyNodes(nA);
-                   System.out.println(nA + emptyNodes);*/
+        for (String x : nfaFinalNodes) {
+                for (String y : newNodes.get(x)) {
+                        dfa.getNode(y).setAttribute("shape", "doublecircle");
+                }
         }
 }
 
-private void createEdges(){
-        Iterator<AbstractEdge> aIterator = dfa.getEdgeIterator();
 
-        int id = 2296;
+
+private void createEdges(){
+        Iterator<AbstractEdge> edgeIt = nfa.getEdgeIterator();
+        int id = 221096;
 
         for (String x : nfaInitNodes) {
                 for (String y : newNodes.get(x)) {
                         dfa.addEdge(String.valueOf(id),"Start", y,true);
+                        id++;
+                }
+        }
+
+
+        while(edgeIt.hasNext()) {
+                AbstractEdge edge = edgeIt.next();
+                if (edge.hasAttribute("label")) {
+                        for (String x : newNodes.get(edge.getNode0().getId())) {
+                                for(String y : newNodes.get(edge.getNode1().getId())) {
+                                        dfa.addEdge(String.valueOf(id),x,y,true);
+                                        dfa.getEdge(String.valueOf(id)).addAttribute("label",edge.getAttribute("label").toString());
+                                        id++;
+                                }
+                        }
+
+                        id++;
                 }
 
         }
+
 }
 
 private Vector<String> getEmptyNodes(String node){
@@ -138,6 +163,20 @@ private Vector<String> getInitialNodes(MultiGraph graph){
         return ret;
 }
 
+private Vector<String> getFinalNodes(MultiGraph graph){
+        Vector<String> ret = new Vector<String>();
+
+        Iterator<AbstractNode> itNode = graph.getNodeIterator();
+
+        while(itNode.hasNext()) {
+                AbstractNode node = itNode.next();
+
+                if(node.getAttribute("shape").equals("doublecircle"))
+                        ret.add(node.getId());
+        }
+        return ret;
+}
+
 private void addHash(String key,String value){
         if (newNodes.containsKey(key)) {
                 Vector<String> tVec = newNodes.get(key);
@@ -167,8 +206,27 @@ private void getAlphabet(){
                 }
 
         }
-
-        System.out.println(alphabet);
 }
 
+private void cleanGraph(){
+        Iterator<AbstractNode> nodeIterator = dfa.getNodeIterator();
+
+        while(nodeIterator.hasNext()) {
+                AbstractNode node = nodeIterator.next();
+                Iterator<AbstractEdge> edgeIterator = node.getEnteringEdgeIterator();
+                if(!edgeIterator.hasNext()) {
+                        if (node.hasAttribute("shape")) {
+                                if (!node.getAttribute("shape").toString().equals("point")) {
+                                        dfa.removeNode(node.getId());
+                                }
+                        } else {
+                                dfa.removeNode(node.getId());
+                        }
+                }
+        }
+}
+
+public MultiGraph getDFA(){
+  return dfa;
+}
 }
