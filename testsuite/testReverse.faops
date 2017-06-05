@@ -1,0 +1,3 @@
+FA A = new("graphA.dot");
+FA B = rev(A);
+B.dump("dot");
