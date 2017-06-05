@@ -1,6 +1,5 @@
-rm *.class
-rm faops/*.class
-javacc FAOPS.jj
-javac -cp "gs-core-1.3.jar:" *.java
-java -cp gs-core-1.3.jar: FAOPS
-dot -Tpng exitTest.dot -o exitTest.png
+dot -Tpng graphA.dot -o graphA.png
+dot -Tpng graphB.dot -o graphB.png
+dot -Tpng graphC.dot -o graphC.png
+dot -Tpng graphD.dot -o graphD.png
+dot -Tpng graphE.dot -o graphE.png
