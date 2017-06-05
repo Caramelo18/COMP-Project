@@ -25,10 +25,8 @@ public class Multiply {
       this.aNodes = new HashMap<String,Vector<String>>();
       this.bNodes = new HashMap<String,Vector<String>>();
 
-      this.initNodeA = new Vector<String>();
-      this.initNodeB = new Vector<String>();
-      this.initNodeA.add("A");
-      this.initNodeB.add("C");
+      this.initNodeA = getInitialNodes(this.graphA);
+      this.initNodeB = getInitialNodes(this.graphB);
 
       newGraph = new MultiGraph("multiply");
       multiply();
@@ -38,10 +36,11 @@ public class Multiply {
       return newGraph;
   }
 
-// TODO - FALTA TERMINAR
   private void multiply(){
       createNodes();
       createEdges();
+
+      System.out.println(getInitialNodes(this.graphA));
 
       DumpDot dump = new DumpDot(newGraph);
       dump.dumpFile("exitTest.dot");
@@ -149,8 +148,30 @@ public class Multiply {
   }
 
   private Vector<String> getInitialNodes(MultiGraph graph){
+    Vector<String> temp = new Vector<String>();
     Vector<String> ret = new Vector<String>();
 
+    Iterator<AbstractNode> itNode = graph.getNodeIterator();
+    Iterator<AbstractEdge> itEdge = graph.getEdgeIterator();
 
+    while(itNode.hasNext()){
+        AbstractNode node = itNode.next();
+
+        if(node.getAttribute("shape").equals("point"))
+          temp.add(node.getId());
+    }
+
+    while(itEdge.hasNext()){
+        AbstractEdge edge = itEdge.next();
+
+        String source = edge.getNode0().getId();
+        String dest = edge.getNode1().getId();
+
+        if (temp.contains(source)) {
+          ret.add(dest);
+        }
+    }
+
+    return ret;
   }
 }
