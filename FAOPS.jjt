@@ -1,4 +1,9 @@
-    PARSER_BEGIN(FAOPS)
+options {
+    MULTI=true;
+    NODE_PREFIX="";
+}
+
+PARSER_BEGIN(FAOPS)
 
 import java.io.FileReader;
 
@@ -18,8 +23,8 @@ public class FAOPS {
 
         FAOPS parser = new FAOPS(fr);
         try {
-            while(true)
-                parser.start();
+            SimpleNode start = parser.start();
+            start.dump("");
         } catch (Throwable e) {
             e.printStackTrace();
     		System.out.println("Rejected.");
@@ -56,41 +61,32 @@ TOKEN :
     | < LF : "\n" | "\r" | "\r\n" >
 }
 
-void start() : {} //no bloco definido pelas primeiras chavetas declaram-se variáveis para a função
+SimpleNode start() : {} //no bloco definido pelas primeiras chavetas declaram-se variáveis para a função
 {
-
-    ((<FA> <FANAME> <ASSIGN> stmt())
-    | dump()) ((<ENDLINE>)? <LF>) {
-        System.out.println("Line Accepted!");
-    }
-    | <EOF> {
+    (((<FA> variable() <ASSIGN> stmt()) | dump()) ((<ENDLINE>)? <LF>))+
+    <EOF> {
         System.out.println("File Accepted");
-        System.exit(0);
+        return jjtThis;
     }
 }
 
-void stmt() : {Token path;}
+void stmt() : {}
 {
-    (<NEW> <QUOTES> (path = <FILENAME>) <QUOTES> <ENDOPERATION>) {}
-    | (expr() (op1() expr())?)
-/*
-    ParseDot parser = new ParseDot();
-    parser.parseFile(path.image);
-    DumpDot dump = new DumpDot(parser.getGraph());
-    dump.dumpFile("exit" + path.image);
+    ((<NEW> <QUOTES> path() <QUOTES> <ENDOPERATION>)
+    | (expr() (op1() expr())?)) {}
+}
 
-    //Reverse rev = new Reverse(parser.getGraph());
-    //Complement comp = new Complement(parser.getGraph());
-    //Complement comp2 = new Complement(comp.getGraph());
-    ParseDot parser1 = new ParseDot();
-    parser1.parseFile("B.dot");
-    //Complement comp = new Complement(parser1.getGraph());
-    //Complement comp2 = new Complement(comp.getGraph());
-    //Reverse rev = new Reverse(parser1.getGraph());
-    //Concatenate con = new Concatenate(parser.getGraph(), parser1.getGraph());
-    Union un = new Union(parser.getGraph(), parser1.getGraph());
-    }|
-    */
+void variable() : {Token var;} {
+    (var = <FANAME>) {
+        jjtThis.name = var.image;
+    }
+}
+
+void path() : {Token path;}
+{
+    (path = <FILENAME>) {
+        jjtThis.name = path.image;
+    }
 }
 
 void expr() : {}

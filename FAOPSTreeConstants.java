@@ -3,19 +3,23 @@ public interface FAOPSTreeConstants
 {
   public int JJTSTART = 0;
   public int JJTSTMT = 1;
-  public int JJTEXPR = 2;
-  public int JJTOP1 = 3;
-  public int JJTOP2 = 4;
-  public int JJTDUMP = 5;
+  public int JJTVARIABLE = 2;
+  public int JJTPATH = 3;
+  public int JJTEXPR = 4;
+  public int JJTOP1 = 5;
+  public int JJTOP2 = 6;
+  public int JJTDUMP = 7;
 
 
   public String[] jjtNodeName = {
     "start",
     "stmt",
+    "variable",
+    "path",
     "expr",
     "op1",
     "op2",
     "dump",
   };
 }
-/* JavaCC - OriginalChecksum=b2829edbaa9e578538a85214486aca30 (do not edit this line) */
+/* JavaCC - OriginalChecksum=8919ae0f504ce28d0a1aecfd39cb3870 (do not edit this line) */

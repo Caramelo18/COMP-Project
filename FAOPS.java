@@ -18,26 +18,25 @@ public class FAOPS/*@bgen(jjtree)*/implements FAOPSTreeConstants, FAOPSConstants
 
         FAOPS parser = new FAOPS(fr);
         try {
-            while(true)
-                parser.start();
+            SimpleNode start = parser.start();
+            start.dump("");
         } catch (Throwable e) {
             e.printStackTrace();
                 System.out.println("Rejected.");
         }
     }
 
-  static final public void start() throws ParseException {/*@bgen(jjtree) start */
-  SimpleNode jjtn000 = new SimpleNode(JJTSTART);
+  static final public SimpleNode start() throws ParseException {/*@bgen(jjtree) start */
+  start jjtn000 = new start(JJTSTART);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case FA:
-      case FANAME:{
+      label_1:
+      while (true) {
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case FA:{
           jj_consume_token(FA);
-          jj_consume_token(FANAME);
+          variable();
           jj_consume_token(ASSIGN);
           stmt();
           break;
@@ -61,24 +60,22 @@ public class FAOPS/*@bgen(jjtree)*/implements FAOPSTreeConstants, FAOPSConstants
           ;
         }
         jj_consume_token(LF);
-jjtree.closeNodeScope(jjtn000, true);
-                                    jjtc000 = false;
-System.out.println("Line Accepted!");
-        break;
+        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+        case FA:
+        case FANAME:{
+          ;
+          break;
+          }
+        default:
+          jj_la1[2] = jj_gen;
+          break label_1;
         }
-      case 0:{
-        jj_consume_token(0);
-jjtree.closeNodeScope(jjtn000, true);
-              jjtc000 = false;
-System.out.println("File Accepted");
-        System.exit(0);
-        break;
-        }
-      default:
-        jj_la1[2] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
       }
+      jj_consume_token(0);
+jjtree.closeNodeScope(jjtn000, true);
+            jjtc000 = false;
+System.out.println("File Accepted");
+        {if ("" != null) return jjtn000;}
     } catch (Throwable jjte000) {
 if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -98,23 +95,21 @@ if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
       }
     }
+    throw new Error("Missing return statement in function");
 }
 
   static final public void stmt() throws ParseException {/*@bgen(jjtree) stmt */
-               SimpleNode jjtn000 = new SimpleNode(JJTSTMT);
-               boolean jjtc000 = true;
-               jjtree.openNodeScope(jjtn000);Token path;
+  stmt jjtn000 = new stmt(JJTSTMT);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
     try {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case NEW:{
         jj_consume_token(NEW);
         jj_consume_token(QUOTES);
-        path = jj_consume_token(FILENAME);
+        path();
         jj_consume_token(QUOTES);
         jj_consume_token(ENDOPERATION);
-jjtree.closeNodeScope(jjtn000, true);
-                                                                   jjtc000 = false;
-
         break;
         }
       case FANAME:
@@ -142,6 +137,9 @@ jjtree.closeNodeScope(jjtn000, true);
         jj_consume_token(-1);
         throw new ParseException();
       }
+jjtree.closeNodeScope(jjtn000, true);
+                                  jjtc000 = false;
+
     } catch (Throwable jjte000) {
 if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -163,8 +161,40 @@ if (jjtc000) {
     }
 }
 
+  static final public void variable() throws ParseException {/*@bgen(jjtree) variable */
+                   variable jjtn000 = new variable(JJTVARIABLE);
+                   boolean jjtc000 = true;
+                   jjtree.openNodeScope(jjtn000);Token var;
+    try {
+      var = jj_consume_token(FANAME);
+jjtree.closeNodeScope(jjtn000, true);
+                       jjtc000 = false;
+jjtn000.name = var.image;
+    } finally {
+if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+      }
+    }
+}
+
+  static final public void path() throws ParseException {/*@bgen(jjtree) path */
+               path jjtn000 = new path(JJTPATH);
+               boolean jjtc000 = true;
+               jjtree.openNodeScope(jjtn000);Token path;
+    try {
+      path = jj_consume_token(FILENAME);
+jjtree.closeNodeScope(jjtn000, true);
+                          jjtc000 = false;
+jjtn000.name = path.image;
+    } finally {
+if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+      }
+    }
+}
+
   static final public void expr() throws ParseException {/*@bgen(jjtree) expr */
-  SimpleNode jjtn000 = new SimpleNode(JJTEXPR);
+  expr jjtn000 = new expr(JJTEXPR);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
@@ -213,7 +243,7 @@ if (jjtc000) {
 }
 
   static final public void op1() throws ParseException {/*@bgen(jjtree) op1 */
-  SimpleNode jjtn000 = new SimpleNode(JJTOP1);
+  op1 jjtn000 = new op1(JJTOP1);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
@@ -247,7 +277,7 @@ if (jjtc000) {
 }
 
   static final public void op2() throws ParseException {/*@bgen(jjtree) op2 */
-  SimpleNode jjtn000 = new SimpleNode(JJTOP2);
+  op2 jjtn000 = new op2(JJTOP2);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
@@ -273,7 +303,7 @@ if (jjtc000) {
 }
 
   static final public void dump() throws ParseException {/*@bgen(jjtree) dump */
-  SimpleNode jjtn000 = new SimpleNode(JJTDUMP);
+  dump jjtn000 = new dump(JJTDUMP);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
@@ -306,7 +336,7 @@ if (jjtc000) {
 	   jj_la1_init_0();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0x30,0x80000,0x31,0xf00,0x27020,0x23020,0xf00,0x3000,};
+	   jj_la1_0 = new int[] {0x30,0x80000,0x30,0xf00,0x27020,0x23020,0xf00,0x3000,};
 	}
 
   /** Constructor with InputStream. */
