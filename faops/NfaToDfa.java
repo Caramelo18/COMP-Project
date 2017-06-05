@@ -226,4 +226,7 @@ private void cleanGraph(){
         }
 }
 
+public MultiGraph getDFA(){
+  return dfa;
+}
 }
