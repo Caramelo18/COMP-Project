@@ -30,9 +30,6 @@ public class Union {
     private void union(){
         createNodes();
         createEdges();
-
-        DumpDot dump = new DumpDot(newGraph);
-        dump.dumpFile("exitTest.dot");
     }
 
     private void createNodes(){
@@ -40,7 +37,7 @@ public class Union {
         Iterator<AbstractNode> bIterator = graphB.getNodeIterator();
         boolean startingDefined = false;
 
-        while(aIterator.hasNext()){            
+        while(aIterator.hasNext()){
             AbstractNode nodeA = aIterator.next();
 
             String nA = nodeA.getId();
@@ -60,7 +57,7 @@ public class Union {
                         startingDefined = true;
                     } else {
                         continue;
-                    }                    
+                    }
                 } else {
                     if(!isPoint(nodeA)){
                         String nB = nodeB.getId();
@@ -70,8 +67,8 @@ public class Union {
                         newGraph.addNode(nodeId);
                         String nodeType = getNodeType(nodeA, nodeB);
                         newGraph.getNode(nodeId).setAttribute("shape", nodeType);
-                    }                    
-                }                  
+                    }
+                }
             }
 
             bIterator = graphB.getNodeIterator();
@@ -89,7 +86,7 @@ public class Union {
 
             if(aEdge.hasAttribute("label"))
                 inputA = aEdge.getAttribute("label").toString();
-            
+
             String sourceA = aEdge.getNode0().getId();
             String destA = aEdge.getNode1().getId();
 

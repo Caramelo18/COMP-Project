@@ -33,9 +33,6 @@ public class Concatenate {
     {
         joinNodes();
         joinEdges();
-
-        DumpDot dump = new DumpDot(concatenatedGraph);
-        dump.dumpFile("exitTest.dot");
     }
 
     private void joinNodes()
@@ -62,8 +59,6 @@ public class Concatenate {
 
         }
 
-        System.out.println("lastNodeA: " + lastNodeA);
-
         nodeIterator = graphB.getNodeIterator();
         while(nodeIterator.hasNext()){
             AbstractNode node = nodeIterator.next();
@@ -81,7 +76,6 @@ public class Concatenate {
                 concatenatedGraph.getNode(node.getId()).addAttribute("shape", shape);
             }
         }
-        System.out.println("firstNodeB: " + firstNodeB);
     }
 
     private void joinEdges()

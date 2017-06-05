@@ -27,8 +27,5 @@ public class Intersection {
 
   private void intersection(){
       newGraph = new Complement(new Union(new Complement(this.graphA).getGraph(), new Complement(this.graphB).getGraph()).getGraph()).getGraph();
-
-      DumpDot dump = new DumpDot(newGraph);
-      dump.dumpFile("exitTest.dot");
   }
 }

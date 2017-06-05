@@ -1,4 +1,4 @@
 FA A = new("B.dot");
 FA B = new("A.dot");
-FA C = D . B;
+FA C = A . B;
 C.dump("APAGA-ME.dot");

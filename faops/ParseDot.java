@@ -23,9 +23,6 @@ public class ParseDot {
         	fs.removeSink(graph);
         }
 
-        System.out.println("FA " + path + " has " + graph.getEdgeCount() + " edges.");
-        System.out.println("FA " + path + " has " + graph.getNodeCount() + " nodes.");
-
         return graph;
     }
 

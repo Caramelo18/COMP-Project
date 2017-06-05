@@ -39,9 +39,6 @@ public class Multiply {
   private void multiply(){
       createNodes();
       createEdges();
-
-      DumpDot dump = new DumpDot(newGraph);
-      dump.dumpFile("exitTest.dot");
   }
 
   private void createNodes(){

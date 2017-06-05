@@ -28,9 +28,6 @@ public NfaToDfa(MultiGraph nfa){
         for (int i = 0; i < 10 ; i++) {
           cleanGraph();
         }
-
-        DumpDot dump = new DumpDot(dfa);
-        dump.dumpFile("exitTest.dot");
 }
 
 private void createNodes(){
