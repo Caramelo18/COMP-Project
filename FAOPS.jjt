@@ -8,13 +8,27 @@ PARSER_BEGIN(FAOPS)
 import java.io.FileReader;
 
 import faops.*;
-
 // código Java que invoca o parser
 public class FAOPS {
     public static void main(String args[]) throws ParseException {
         // criação do objecto utilizando o constructor com argumento para
+        FileReader fr = null;
+        try {
+            fr = new FileReader("test.faops");
 
-        
+        } catch (Throwable e) {
+            System.out.println("File not found");
+        }
+
+        FAOPS parser = new FAOPS(fr);
+        try {
+            Start start = parser.Start();
+            start.eval();
+            start.dump("");
+        } catch (Throwable e) {
+            e.printStackTrace();
+    		System.out.println("Rejected.");
+    	}
     }
 }
 PARSER_END(FAOPS)
@@ -47,42 +61,42 @@ TOKEN :
     | < LF : "\n" | "\r" | "\r\n" >
 }
 
-SimpleNode start() : {} //no bloco definido pelas primeiras chavetas declaram-se variáveis para a função
+Start Start() : {} //no bloco definido pelas primeiras chavetas declaram-se variáveis para a função
 {
-    (((<FA> variable() <ASSIGN> stmt()) | dump()) ((<ENDLINE>)? <LF>))+
+    (((<FA> FA() <ASSIGN> Stmt()) | Dump()) ((<ENDLINE>)? <LF>))+
     <EOF> {
         System.out.println("File Accepted");
         return jjtThis;
     }
 }
 
-void stmt() : {}
+void Stmt() : {}
 {
-    ((<NEW> <QUOTES> path() <QUOTES> <ENDOPERATION>)
-    | (expr() (op1() expr())?)) {}
+    ((<NEW> <QUOTES> Path() <QUOTES> <ENDOPERATION>)
+    | (Expr() (Op1() Expr())?)) {}
 }
 
-void variable() : {Token var;} {
+void FA() : {Token var;} {
     (var = <FANAME>) {
         jjtThis.name = var.image;
     }
 }
 
-void path() : {Token path;}
+void Path() : {Token path;}
 {
     (path = <FILENAME>) {
         jjtThis.name = path.image;
     }
 }
 
-void expr() : {}
+void Expr() : {}
 {
-    (op2() stmt() <ENDOPERATION>) |
-    (<BEGINOPERATION> stmt() <ENDOPERATION>) |
-    (variable())
+    (Op2() Stmt() <ENDOPERATION>) |
+    (<BEGINOPERATION> Stmt() <ENDOPERATION>) |
+    (FA())
 }
 
-void op1() : {Token op;}
+void Op1() : {Token op;}
 {
     (op = <MULTIPLY>) {
         jjtThis.op = 0;
@@ -98,7 +112,7 @@ void op1() : {Token op;}
     }
 }
 
-void op2() : {Token op;}
+void Op2() : {Token op;}
 {
     (op = <COMPLEMENT>) {
         jjtThis.op = 0;
@@ -108,7 +122,7 @@ void op2() : {Token op;}
     }
 }
 
-void dump() : {}
+void Dump() : {}
 {
-    <FANAME> <DUMP> <QUOTES> <FILENAME> <QUOTES> <ENDOPERATION>
+    FA() <DUMP> <QUOTES> Path() <QUOTES> <ENDOPERATION>
 }

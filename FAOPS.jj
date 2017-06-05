@@ -9,7 +9,6 @@ PARSER_BEGIN(FAOPS)
 import java.io.FileReader;
 
 import faops.*;
-
 // c\u00f3digo Java que invoca o parser
 public class FAOPS/*@bgen(jjtree)*/implements FAOPSTreeConstants/*@egen*/ {/*@bgen(jjtree)*/
   protected static JJTFAOPSState jjtree = new JJTFAOPSState();
@@ -17,8 +16,23 @@ public class FAOPS/*@bgen(jjtree)*/implements FAOPSTreeConstants/*@egen*/ {/*@bg
 /*@egen*/
     public static void main(String args[]) throws ParseException {
         // cria\u00e7\u00e3o do objecto utilizando o constructor com argumento para
+        FileReader fr = null;
+        try {
+            fr = new FileReader("test.faops");
 
-        
+        } catch (Throwable e) {
+            System.out.println("File not found");
+        }
+
+        FAOPS parser = new FAOPS(fr);
+        try {
+            Start start = parser.Start();
+            start.eval();
+            start.dump("");
+        } catch (Throwable e) {
+            e.printStackTrace();
+    		System.out.println("Rejected.");
+    	}
     }
 }
 PARSER_END(FAOPS)
@@ -51,15 +65,15 @@ TOKEN :
     | < LF : "\n" | "\r" | "\r\n" >
 }
 
-SimpleNode start() : {/*@bgen(jjtree) start */
-  start jjtn000 = new start(JJTSTART);
+Start Start() : {/*@bgen(jjtree) Start */
+  Start jjtn000 = new Start(JJTSTART);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
 /*@egen*/} //no bloco definido pelas primeiras chavetas declaram-se vari\u00e1veis para a fun\u00e7\u00e3o
-{/*@bgen(jjtree) start */
+{/*@bgen(jjtree) Start */
     try {
 /*@egen*/
-    (((<FA> variable() <ASSIGN> stmt()) | dump()) ((<ENDLINE>)? <LF>))+
+    (((<FA> FA() <ASSIGN> Stmt()) | Dump()) ((<ENDLINE>)? <LF>))+
     <EOF>/*@bgen(jjtree)*/
           {
             jjtree.closeNodeScope(jjtn000, true);
@@ -91,16 +105,16 @@ SimpleNode start() : {/*@bgen(jjtree) start */
 /*@egen*/
 }
 
-void stmt() : {/*@bgen(jjtree) stmt */
-  stmt jjtn000 = new stmt(JJTSTMT);
+void Stmt() : {/*@bgen(jjtree) Stmt */
+  Stmt jjtn000 = new Stmt(JJTSTMT);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
 /*@egen*/}
-{/*@bgen(jjtree) stmt */
+{/*@bgen(jjtree) Stmt */
     try {
 /*@egen*/
-    ((<NEW> <QUOTES> path() <QUOTES> <ENDOPERATION>)
-    | (expr() (op1() expr())?))/*@bgen(jjtree)*/
+    ((<NEW> <QUOTES> Path() <QUOTES> <ENDOPERATION>)
+    | (Expr() (Op1() Expr())?))/*@bgen(jjtree)*/
                                 {
                                   jjtree.closeNodeScope(jjtn000, true);
                                   jjtc000 = false;
@@ -128,11 +142,11 @@ void stmt() : {/*@bgen(jjtree) stmt */
 /*@egen*/
 }
 
-void variable() : {/*@bgen(jjtree) variable */
-                   variable jjtn000 = new variable(JJTVARIABLE);
-                   boolean jjtc000 = true;
-                   jjtree.openNodeScope(jjtn000);
-/*@egen*/Token var;} {/*@bgen(jjtree) variable */
+void FA() : {/*@bgen(jjtree) FA */
+             FA jjtn000 = new FA(JJTFA);
+             boolean jjtc000 = true;
+             jjtree.openNodeScope(jjtn000);
+/*@egen*/Token var;} {/*@bgen(jjtree) FA */
     try {
 /*@egen*/
     (var = <FANAME>)/*@bgen(jjtree)*/
@@ -151,12 +165,12 @@ void variable() : {/*@bgen(jjtree) variable */
 /*@egen*/
 }
 
-void path() : {/*@bgen(jjtree) path */
-               path jjtn000 = new path(JJTPATH);
+void Path() : {/*@bgen(jjtree) Path */
+               Path jjtn000 = new Path(JJTPATH);
                boolean jjtc000 = true;
                jjtree.openNodeScope(jjtn000);
 /*@egen*/Token path;}
-{/*@bgen(jjtree) path */
+{/*@bgen(jjtree) Path */
     try {
 /*@egen*/
     (path = <FILENAME>)/*@bgen(jjtree)*/
@@ -175,17 +189,17 @@ void path() : {/*@bgen(jjtree) path */
 /*@egen*/
 }
 
-void expr() : {/*@bgen(jjtree) expr */
-  expr jjtn000 = new expr(JJTEXPR);
+void Expr() : {/*@bgen(jjtree) Expr */
+  Expr jjtn000 = new Expr(JJTEXPR);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
 /*@egen*/}
-{/*@bgen(jjtree) expr */
+{/*@bgen(jjtree) Expr */
     try {
 /*@egen*/
-    (op2() stmt() <ENDOPERATION>) |
-    (<BEGINOPERATION> stmt() <ENDOPERATION>) |
-    (variable())/*@bgen(jjtree)*/
+    (Op2() Stmt() <ENDOPERATION>) |
+    (<BEGINOPERATION> Stmt() <ENDOPERATION>) |
+    (FA())/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -208,12 +222,12 @@ void expr() : {/*@bgen(jjtree) expr */
 /*@egen*/
 }
 
-void op1() : {/*@bgen(jjtree) op1 */
-              op1 jjtn000 = new op1(JJTOP1);
+void Op1() : {/*@bgen(jjtree) Op1 */
+              Op1 jjtn000 = new Op1(JJTOP1);
               boolean jjtc000 = true;
               jjtree.openNodeScope(jjtn000);
 /*@egen*/Token op;}
-{/*@bgen(jjtree) op1 */
+{/*@bgen(jjtree) Op1 */
     try {
 /*@egen*/
     (op = <MULTIPLY>)/*@bgen(jjtree)*/
@@ -256,12 +270,12 @@ void op1() : {/*@bgen(jjtree) op1 */
 /*@egen*/
 }
 
-void op2() : {/*@bgen(jjtree) op2 */
-              op2 jjtn000 = new op2(JJTOP2);
+void Op2() : {/*@bgen(jjtree) Op2 */
+              Op2 jjtn000 = new Op2(JJTOP2);
               boolean jjtc000 = true;
               jjtree.openNodeScope(jjtn000);
 /*@egen*/Token op;}
-{/*@bgen(jjtree) op2 */
+{/*@bgen(jjtree) Op2 */
     try {
 /*@egen*/
     (op = <COMPLEMENT>)/*@bgen(jjtree)*/
@@ -288,15 +302,29 @@ void op2() : {/*@bgen(jjtree) op2 */
 /*@egen*/
 }
 
-void dump() : {/*@bgen(jjtree) dump */
-  dump jjtn000 = new dump(JJTDUMP);
+void Dump() : {/*@bgen(jjtree) Dump */
+  Dump jjtn000 = new Dump(JJTDUMP);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
 /*@egen*/}
-{/*@bgen(jjtree) dump */
+{/*@bgen(jjtree) Dump */
     try {
 /*@egen*/
-    <FANAME> <DUMP> <QUOTES> <FILENAME> <QUOTES> <ENDOPERATION>/*@bgen(jjtree)*/
+    FA() <DUMP> <QUOTES> Path() <QUOTES> <ENDOPERATION>/*@bgen(jjtree)*/
+    } catch (Throwable jjte000) {
+      if (jjtc000) {
+        jjtree.clearNodeScope(jjtn000);
+        jjtc000 = false;
+      } else {
+        jjtree.popNode();
+      }
+      if (jjte000 instanceof RuntimeException) {
+        throw (RuntimeException)jjte000;
+      }
+      if (jjte000 instanceof ParseException) {
+        throw (ParseException)jjte000;
+      }
+      throw (Error)jjte000;
     } finally {
       if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
