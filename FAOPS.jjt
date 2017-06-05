@@ -13,22 +13,8 @@ import faops.*;
 public class FAOPS {
     public static void main(String args[]) throws ParseException {
         // criação do objecto utilizando o constructor com argumento para
-        FileReader fr = null;
-        try {
-            fr = new FileReader("test.faops");
 
-        } catch (Throwable e) {
-            System.out.println("File not found");
-        }
-
-        FAOPS parser = new FAOPS(fr);
-        try {
-            SimpleNode start = parser.start();
-            start.dump("");
-        } catch (Throwable e) {
-            e.printStackTrace();
-    		System.out.println("Rejected.");
-    	}
+        
     }
 }
 PARSER_END(FAOPS)
