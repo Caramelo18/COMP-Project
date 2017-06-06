@@ -1,0 +1,11 @@
+digraph finite_state_machine {
+    node [shape = point ]; St;
+    node [shape = doublecircle]; A;
+
+    node [shape = circle];
+    St -> A;
+    A -> A [ label = "b" ];
+    A -> B [ label = "a" ];
+    B -> A [ label = "a" ];
+    B -> B [ label = "b" ];
+}

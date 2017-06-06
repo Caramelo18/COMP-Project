@@ -5,4 +5,4 @@ FA D = A int B;
 FA E = not(C);
 FA F = rev(D . E);
 FA G = A + F;
-G.dump("dot");
+G.dump("ex3.dot");

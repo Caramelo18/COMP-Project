@@ -2,4 +2,4 @@ FA A = new("graphA.dot");
 FA B = new("graphB.dot");
 FA C = A + B;
 FA D = rev(not(C));
-D.dump("dot");
+D.dump("ex1.dot");

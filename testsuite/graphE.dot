@@ -1,0 +1,19 @@
+digraph finite_state_machine {
+    node [shape = point ]; Ai;
+    node [shape = doublecircle]; G; C;
+
+    node [shape = circle];
+    Ai -> A;
+    A -> B [label = "0"];
+    A -> C [label = "1"];
+    B -> E [label = "0"];
+    B -> F [label = "1"];
+    C -> E [label = "0"];
+    C -> F [label = "1"];
+    E -> G [label = "0"];
+    E -> E [label = "1"];
+    F -> G [label = "1"];
+    F -> F [label = "0"];
+    G -> G [label = "0"];
+    G -> G [label = "1"];
+}

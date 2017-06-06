@@ -1,4 +1,4 @@
 FA A = new("graphA.dot");
 FA B = new("graphB.dot");
 FA C = A int B;
-C.dump("dot");
+C.dump("exIntersection.dot");
