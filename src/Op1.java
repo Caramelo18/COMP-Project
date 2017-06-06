@@ -16,16 +16,16 @@ class Op1 extends SimpleNode {
   }
 
     public MultiGraph eval(MultiGraph leftGraph, MultiGraph rightGraph) {
-        if (operations[op] == "multiply") {
+        if (op == 0) {
             Multiply multiplier = new Multiply(leftGraph, rightGraph);
             return multiplier.getGraph();
-        } else if (operations[op] == "concatenate") {
+        } else if (op == 1) {
             Concatenate concatenator = new Concatenate(leftGraph, rightGraph);
             return concatenator.getGraph();
-        } else if (operations[op] == "intersection") {
+        } else if (op == 2) {
             Intersection intersector = new Intersection(leftGraph, rightGraph);
             return intersector.getGraph();
-        } else if (operations[op] == "intersection") {
+        } else if (op == 3) {
             Union unitor = new Union(leftGraph, rightGraph);
             return unitor.getGraph();
         }
